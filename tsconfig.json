@@ -19,7 +19,7 @@
     // Typechecking
     "strict": true,
     "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true,
+    "exactOptionalPropertyTypes": false,
 
     // Módulos
     "verbatimModuleSyntax": false,   
