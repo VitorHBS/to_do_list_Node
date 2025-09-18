@@ -17,3 +17,14 @@ export const taskListSchema = z.object({
 });
 
 export const tasksListSchema = z.array(taskListSchema)
+
+
+export const idSchema = z.object({
+  id: z.number()
+})
+
+export const updateUserSchema = z.object({
+  newTitle: z.string().min(2),
+  newDescription: z.string().optional().nullable(),
+  newStatus: z.enum(["pending", "done"])
+})

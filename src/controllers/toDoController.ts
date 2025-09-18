@@ -1,4 +1,4 @@
-import { taskSchema, tasksListSchema } from "../schemas/taskSchema";
+import { taskSchema, tasksListSchema, updateUserSchema } from "../schemas/taskSchema";
 import * as taskService from "../services/task";
 import { Request, Response } from "express";
 
@@ -40,7 +40,32 @@ export async function getAllTask(req: Request, res: Response) {
 
 /*        Alteração         */
 
+export async function changeTask(req: Request, res: Response) {
 
+    const { id } = req.params;
+    const taskId = Number(id);
+
+    if (isNaN(taskId)) {
+        return res.status(400).json({ message: "O ID da task deve ser um número" })
+    }
+
+    const parseResult = updateUserSchema.parse(req.body);
+
+    const { newTitle, newDescription, newStatus } = parseResult;
+
+    try {
+        const changedTask = await taskService.changeTask(
+            Number(taskId),
+            newTitle,
+            newDescription ?? '',
+            newStatus);
+
+        return res.status(200).json(changedTask);
+
+    } catch (err) {
+        res.status(400).json({ error: "Não foi possivel alterar as informações", err });
+    }
+}
 
 
 

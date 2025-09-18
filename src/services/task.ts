@@ -1,5 +1,6 @@
 import { Prisma } from "@prisma/client";
 import { prisma } from "../libs/prisma";
+import { id } from "zod/locales";
 
 
        /*        Criação         */
@@ -22,3 +23,22 @@ export const getAllTask = async () => {
 
     return tasks;
 }
+
+/*        Atualização         */
+
+export const changeTask = async (idTask: number, newTitle: string, newDescription: string, newStatus: string) => {
+    const changeTask = await prisma.task.update({
+        where:{
+            id: idTask
+        },
+        data: {
+            title: newTitle,
+            description: newDescription ?? null,
+            status: newStatus
+        }
+    })
+
+    return changeTask;
+}
+
+/*        Exclusão         */
