@@ -7,6 +7,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Priority {
+  baixa
+  media
+  alta
+}
+
 model Task {
   id          Int      @id @default(autoincrement())
   title       String
@@ -14,4 +20,6 @@ model Task {
   status      String   @default("pending")
   createdAt   DateTime @default(now())
   updateAt    DateTime @updatedAt
+  priority    Priority @default(media)
+  category    String?
 }

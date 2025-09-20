@@ -1,9 +1,12 @@
+import { Priority } from "@prisma/client";
 import { z } from "zod";
 
 export const taskSchema = z.object({
   title: z.string(),
   description: z.string().optional(),
   status: z.enum(["pending", "done"]).default("pending"),
+  category: z.string().optional(),
+  priority: z.enum(["baixa", "media", "alta"]).default("media")
 });
 
 
@@ -12,8 +15,11 @@ export const taskListSchema = z.object({
   title: z.string(),
   description: z.string().nullable().optional(),
   status: z.enum(["pending", "done"]),
+  priority: z.string(),
+  category: z.string().optional(),
   createdAt: z.date(),
   updateAt: z.date()
+
 });
 
 export const tasksListSchema = z.array(taskListSchema)

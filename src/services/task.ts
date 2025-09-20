@@ -10,7 +10,9 @@ export const createTask = async (data: Prisma.TaskCreateInput) => {
         data: {
             title: data.title,
             description: data.description ?? null,
-            status: data.status ?? "pending"
+            status: data.status ?? "pending",
+            priority: data.priority,
+            category: data.category
         }
     })
     return task;
@@ -42,3 +44,12 @@ export const changeTask = async (idTask: number, newTitle: string, newDescriptio
 }
 
 /*        Exclusão         */
+
+export const deleteTask = async(idTask: number) => {
+    const deletedTask = await prisma.task.delete({
+        where: {
+            id: idTask
+        }
+    })
+    return deletedTask
+}

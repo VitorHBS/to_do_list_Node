@@ -1,4 +1,4 @@
-import { taskSchema, tasksListSchema, updateUserSchema } from "../schemas/taskSchema";
+import { idSchema, taskSchema, tasksListSchema, updateUserSchema } from "../schemas/taskSchema";
 import * as taskService from "../services/task";
 import { Request, Response } from "express";
 
@@ -70,3 +70,20 @@ export async function changeTask(req: Request, res: Response) {
 
 
 /*        Exclusão         */
+
+export async function deleteTask(req:Request, res: Response) {
+    const { id } = req.params;
+    const taskId = Number(id)
+
+    if (isNaN(taskId)){
+        res.status(400).json({message: "erro ao encontrar o id"})
+    }
+
+    try {
+        const deletedTask = await taskService.deleteTask(taskId);
+        res.status(200).json({message: "tarefa deletada com sucesso", deletedTask})
+    }catch(err:any) {
+        res.status(500).json({error: "erro ao deletar tarefa", err})
+        return err
+    }
+}
